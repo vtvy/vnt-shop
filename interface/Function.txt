@@ -1,0 +1,11 @@
+I. Manager
+    1. Manage employee's account
+        1.1. Create account for Employee
+            Input: email : string
+            Output:
+            {
+                success: true/false,
+                message: "Some text that you want",
+                error: this error,
+            }
+        1.2. Reset default password for employee

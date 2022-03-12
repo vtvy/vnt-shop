@@ -1,0 +1,10 @@
+I. Manager
+    1. Employee Manager
+        1.1. Create account for Employee
+            Input: email : string
+            Output:
+            {
+                success: true/false,
+                message: "Some text that you want",
+                error: this error,
+            }

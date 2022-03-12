@@ -1,0 +1,77 @@
+Permistion
+--
+_id int PK IDENTITY
+index   int
+name string 
+
+Account
+--
+_id         int PK IDENTITY
+informationId   ObjectId FK - Information.index NULLABLE
+username    string
+password    string
+defaultPassword string
+permision   objectId FK - Permistion._id
+state       boolean
+createAt    date   default=Date()
+updateAt    date   default=Date()
+
+Information
+--
+_id int PK IDENTITY
+avatar string   NULLABLE
+email string    NULLABLE
+address string  NULLABLE
+phone string
+name string
+birthday date   default=Date() NULLABLE
+history array FK -< Product._id  NULLABLE
+createAt    date   default=Date()
+updateAt    date   default=Date()
+
+Brand
+--
+_id     int PK IDENTITY
+name    string
+product array   FK -< Product._id
+createAt    date   default=Date()
+updateAt    date   default=Date()
+
+Product
+--
+_id     int PK IDENTITY
+name    string UNIQUE
+brandId objectId
+defaultPrice array
+price   array
+discount  array  NULLABLE
+technologyInformation   array
+vote    array FK -< Vote._id   NULLABLE
+createAt    date   default=Date()
+updateAt    date   default=Date()
+
+Vote
+--
+_id     int PK IDENTITY
+state   int
+createAt    date   default=Date()
+updateAt    date   default=Date()
+
+
+Ask
+--
+_id     int PK IDENTITY
+replyOf   objectId FK - Ask._id
+accountId   FK - Account._id
+createAt    date   default=Date()
+updateAt    date   default=Date()
+
+Order
+--
+_id     int PK IDENTITY
+product array FK  -< Product._id
+state   boolean
+createAt    date   default=Date()
+updateAt    date   default=Date()
+
+
