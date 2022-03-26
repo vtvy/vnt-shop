@@ -46,7 +46,7 @@ function App() {
                 password: "b",
             },
         });
-        console.log(a);
+        console.log("this is ",a);
     }
 
     return (
