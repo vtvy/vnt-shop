@@ -20,11 +20,11 @@ Information
 --
 _id int PK IDENTITY
 avatar string   NULLABLE
-email string    NULLABLE
+email string
 address string  NULLABLE
-phone string
+phone NULLABLE
 name string
-birthday date   default=Date() NULLABLE
+birthday date   NULLABLE
 history array FK -< Product._id  NULLABLE
 createAt    date   default=Date()
 updateAt    date   default=Date()

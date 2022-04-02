@@ -1,5 +1,5 @@
 I. Manager
-    1. Manage employee's account
+    1. Employee's account management
         1.1. Create account for Employee
             Input: email : string
             Output:
@@ -9,3 +9,7 @@ I. Manager
                 error: this error,
             }
         1.2. Reset default password for employee
+II. Saler
+    1. Saler account management
+        1.1 Login
+        1.2 Change information
