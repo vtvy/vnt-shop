@@ -9,7 +9,6 @@ import Button from "@material-ui/core/Button";
 import { Avatar, Box, Link } from "@material-ui/core";
 import { login } from "../../grapql-client/mutations";
 import { useMutation } from "@apollo/client";
-
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     container: {
@@ -46,27 +45,27 @@ type State = {
   username: string;
   password: string;
   isButtonDisabled: boolean;
-  // helperText: string;
-  // isError: boolean;
+  helperText: string;
+  isError: boolean;
 };
 
 const initialState: State = {
   username: "",
   password: "",
   isButtonDisabled: true,
-  // helperText: "",
-  // isError: false,
+  helperText: "",
+  isError: false,
 };
 
 type Action =
   | { type: "setUsername"; payload: string }
   | { type: "setPassword"; payload: string }
   | { type: "setIsButtonDisabled"; payload: boolean }
-  // | { type: "loginSuccess"; payload: string }
-  // | { type: "loginFailed"; payload: string }
-  // | { type: "setIsError"; payload: boolean };
+  | { type: "loginSuccess"; payload: string }
+  | { type: "loginFailed"; payload: string }
+  | { type: "setIsError"; payload: boolean };
 
-export const reducer = (state: State, action: Action): State => {
+const reducer = (state: State, action: Action): State => {
   switch (action.type) {
     case "setUsername":
       return {
@@ -83,23 +82,23 @@ export const reducer = (state: State, action: Action): State => {
         ...state,
         isButtonDisabled: action.payload,
       };
-    // case "loginSuccess":
-    //   return {
-    //     ...state,
-    //     helperText: action.payload,
-    //     isError: false,
-    //   };
-    // case "loginFailed":
-    //   return {
-    //     ...state,
-    //     helperText: action.payload,
-    //     isError: true,
-    //   };
-    // case "setIsError":
-    //   return {
-    //     ...state,
-    //     isError: action.payload,
-    //   };
+    case "loginSuccess":
+      return {
+        ...state,
+        helperText: action.payload,
+        isError: false,
+      };
+    case "loginFailed":
+      return {
+        ...state,
+        helperText: action.payload,
+        isError: true,
+      };
+    case "setIsError":
+      return {
+        ...state,
+        isError: action.payload,
+      };
   }
 };
 export const Login = () => {
@@ -119,26 +118,15 @@ export const Login = () => {
     }
   }, [state.username, state.password]);
   //triggers when login button is clicked
-
-  const [loginInput, dataLogin] = useMutation(login);
-  // const handleLogin = () => {
-  //   if (state.username === "a" && state.password === "b") {
-  //     dispatch({
-  //       type: "loginSuccess",
-  //       payload: "Login Successfully",
-  //     });
-  //   } else {
-  //     dispatch({
-  //       type: "loginFailed",
-  //       payload: "Incorrect username or password",
-  //     });
-  //   }
-  // };
+  const [loginInput, { data, loading, error }] = useMutation(login);
   const handleLogin = () => {
     const a = loginInput({
       variables: {
         username: state.username,
         password: state.password,
+      },
+      onError(err) {
+        console.log(err);
       },
     });
     console.log(a);
@@ -182,7 +170,7 @@ export const Login = () => {
         <CardContent>
           <div>
             <TextField
-              // error={state.isError}
+              error={state.isError}
               fullWidth
               id="username"
               type="email"
@@ -193,14 +181,14 @@ export const Login = () => {
               onKeyPress={handleKeyPress}
             />
             <TextField
-              // error={state.isError}
+              error={state.isError}
               fullWidth
               id="password"
               type="password"
               label="Password"
               placeholder="Password"
               margin="normal"
-              // helperText={state.helperText}
+              helperText={state.helperText}
               onChange={handlePasswordChange}
               onKeyPress={handleKeyPress}
             />
