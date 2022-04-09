@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import AccountTableForm from "./AccountTableForm";
+import TableForm from "./TableForm";
 
 import { Account } from "./index";
 
@@ -10,12 +10,7 @@ interface Props {
   onEdit: (data: Account) => void;
 }
 
-const AccountTableRow: React.FC<Props> = ({
-  account,
-  onRemove,
-  onEdit,
-  index,
-}) => {
+const TableRow: React.FC<Props> = ({ account, onRemove, onEdit }) => {
   const [isEdit, setIsEdit] = useState<boolean>(false);
   const handleCancel = () => {
     setIsEdit(false);
@@ -29,7 +24,7 @@ const AccountTableRow: React.FC<Props> = ({
   return (
     <>
       {isEdit ? (
-        <AccountTableForm
+        <TableForm
           initialValue={account}
           onCancel={handleCancel}
           onConfirm={handleEdit}
@@ -42,6 +37,8 @@ const AccountTableRow: React.FC<Props> = ({
           </td>
           <td>
             <span onClick={() => setIsEdit(true)}>{account.password}</span>
+          </td>
+          <td>
             <div className="accountAction">
               <div
                 className="edit accountAction-btn"
@@ -63,4 +60,4 @@ const AccountTableRow: React.FC<Props> = ({
   );
 };
 
-export default AccountTableRow;
+export default TableRow;

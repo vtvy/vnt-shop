@@ -7,11 +7,7 @@ interface Props {
   onConfirm: (data: Account) => void;
 }
 
-const AccountTableForm: React.FC<Props> = ({
-  initialValue,
-  onCancel,
-  onConfirm,
-}) => {
+const TableForm: React.FC<Props> = ({ initialValue, onCancel, onConfirm }) => {
   const [newAccount, setNewAccount] = useState<Account>(initialValue);
 
   const handleError = () => {
@@ -45,7 +41,7 @@ const AccountTableForm: React.FC<Props> = ({
       <td>
         <span className="d-flex align-items-center justify-content-center"></span>
       </td>
-      <td>
+      <td className="p-1">
         <input
           type="text"
           name="username"
@@ -56,7 +52,7 @@ const AccountTableForm: React.FC<Props> = ({
           autoFocus={true}
         />
       </td>
-      <td>
+      <td className="p-1">
         <input
           type="password"
           name="password"
@@ -66,6 +62,8 @@ const AccountTableForm: React.FC<Props> = ({
           onKeyDown={handleEnter}
           autoComplete="off"
         />
+      </td>
+      <td>
         <div className="accountAction">
           <div
             className="cancel accountAction-btn text-danger"
@@ -89,4 +87,4 @@ const AccountTableForm: React.FC<Props> = ({
   );
 };
 
-export default AccountTableForm;
+export default TableForm;

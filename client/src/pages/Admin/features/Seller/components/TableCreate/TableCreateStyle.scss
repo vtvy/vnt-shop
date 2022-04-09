@@ -1,14 +1,7 @@
 .accountTable {
   tbody {
+    border-top: 1.5px solid #e3e9ed !important;
     tr {
-      td {
-        border-right: 0.5px solid #ccc;
-        &:last-child {
-          border-right: none;
-        }
-      }
-
-      position: relative;
       &:hover {
         .accountAction {
           display: flex;
@@ -16,11 +9,7 @@
       }
       .accountAction {
         display: none;
-        position: absolute;
-        right: 0;
-        top: 50%;
-        transform: translateY(-50%);
-
+        justify-content: space-evenly;
         &-btn {
           width: 1.5rem;
           height: 1.5rem;

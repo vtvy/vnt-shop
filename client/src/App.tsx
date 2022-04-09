@@ -1,11 +1,15 @@
-import React, { useEffect, useState } from "react";
-import "./App.css";
-import axios from "axios";
-import { ApolloProvider, useQuery, useMutation } from "@apollo/client";
-import { register, login } from "./grapql-client/mutations";
-import Admin from "./pages/Admin";
+import { useMutation } from "@apollo/client";
 import "bootstrap/dist/css/bootstrap.min.css";
+import React, { useEffect, useState } from "react";
 import "react-toastify/dist/ReactToastify.css";
+import "./App.css";
+import { login } from "./grapql-client/mutations";
+import Admin from "./pages/Admin";
+
+interface Account {
+  username: string;
+  password: string;
+}
 
 function App() {
   // const variables = [
@@ -21,37 +25,30 @@ function App() {
   // if (loading) return <p>Loading ...</p>;
   // console.log(data);
 
-  const [addUsers, dataMutaion] = useMutation(register);
-  let datas = [
-    {
-      username: "a",
-      password: "b",
-    },
-  ];
-  async function fech() {
-    const a = addUsers({
+  const [loginInput, dataMutaion] = useMutation(login);
+  const [account, setAccount] = useState<Account>({
+    username: "a",
+    password: "b",
+  });
+
+  const handleLogin = () => {
+    loginInput({
       variables: {
-        userInputs: datas,
+        username: account.username,
+        password: account.password,
       },
     });
-  }
+  };
 
-  // Nguyen
-  const [loginInput, dataLogin] = useMutation(login);
-
-  async function logins() {
-    const a = await loginInput({
-      variables: {
-        username: "a",
-        password: "b",
-      },
-    });
-  }
+  useEffect(() => {
+    if (dataMutaion.called) {
+      console.log(dataMutaion.data);
+    }
+  }, [dataMutaion]);
 
   return (
     <div className="App">
       {/* <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
         <p>
           Edit <code>src/App.tsx</code> and save to reload.
         </p>
@@ -63,8 +60,8 @@ function App() {
         >
           Learn React
         </a>
-        <button onClick={fech}>bam di</button>
-        <button onClick={logins}>login</button>
+
+        <button onClick={handleLogin}>login</button>
       </header> */}
       <Admin />
     </div>

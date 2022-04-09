@@ -1,0 +1,19 @@
+.table {
+  thead {
+    background: #f2f5f7;
+    color: #516273;
+  }
+  tbody {
+    border-top: 1.5px solid #e3e9ed !important;
+    tr {
+      td {
+        background: white;
+        border-right: 0.5px solid #ccc;
+        &:last-child {
+          border-right: none;
+        }
+      }
+      position: relative;
+    }
+  }
+}

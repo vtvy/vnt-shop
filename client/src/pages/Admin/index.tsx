@@ -1,23 +1,29 @@
 import React from "react";
 import { Col, Container, Row } from "react-bootstrap";
-import BodyAdmin from "../../components/BodyAdmin";
-import HeaderAdmin from "../../components/HeaderAdmin";
-import SidebarAdmin from "../../components/SidebarAdmin";
+import Header from "./components/Header";
 import "./AdminStyle.scss";
+import Sidebar from "./components/Sidebar";
+import Body from "./components/Body";
+
+import { Provider } from "react-redux";
+
+import { store } from "./redux/store";
 
 const Admin = () => {
   return (
-    <Container fluid className="admin-page">
-      <Row className="h-100 ">
-        <Col sm={2} className="p-0">
-          <SidebarAdmin />
-        </Col>
-        <Col sm={10} className="p-0">
-          <HeaderAdmin />
-          <BodyAdmin />
-        </Col>
-      </Row>
-    </Container>
+    <Provider store={store}>
+      <Container fluid className="admin-page">
+        <Row className="h-100 ">
+          <Col className="p-0 ">
+            <Sidebar />
+          </Col>
+          <Col sm={10} className="p-0">
+            <Header />
+            <Body />
+          </Col>
+        </Row>
+      </Container>
+    </Provider>
   );
 };
 

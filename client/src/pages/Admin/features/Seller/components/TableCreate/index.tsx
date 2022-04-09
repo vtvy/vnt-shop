@@ -1,13 +1,14 @@
 import { useMutation } from "@apollo/client";
 import React, { useEffect, useState } from "react";
-import { Button, Table } from "react-bootstrap";
+import { Button, Container } from "react-bootstrap";
 import { toast, ToastContainer } from "react-toastify";
-import { register } from "../../grapql-client/mutations";
-import ExportToExcel from "../ExportToExcel";
-import AccountTableForm from "./AccountTableForm";
-import AccountTableRow from "./AccountTableRow";
-import "./AccountTableStyle.scss";
-
+import { register } from "../../../../../../grapql-client/mutations";
+import ExportToExcel from "../../../../components/ExportToExcel";
+import TableForm from "./TableForm";
+import TableRow from "./TableRow";
+import "./TableCreateStyle.scss";
+import Table from "../../../../components/Table";
+import { IHeaderTableItem } from "../../../../components/Table/index";
 interface DbAccount {
   username: string;
   password: string;
@@ -18,6 +19,12 @@ export interface Account extends DbAccount {
 }
 
 const myAccountList: Account[] = [];
+const headerContent: IHeaderTableItem[] = [
+  { title: "#", column: 1 },
+  { title: "User Name", column: 5 },
+  { title: "Password", column: 5 },
+  { title: "Action", column: 1 },
+];
 
 const AccountTable = () => {
   const [accountList, setAccountList] = useState<Account[]>(myAccountList);
@@ -110,68 +117,63 @@ const AccountTable = () => {
   }, [dataMutaion.loading]);
 
   return (
-    <div className="d-flex flex-column mt-5 px-3 accountTable">
+    <>
       <ToastContainer />
-      <Table striped hover className="mb-0 shadow rounded-3 overflow-hidden">
-        <thead className="text-white">
-          <tr className="rounded bg-danger">
-            <th className="col-1">#</th>
-            <th className="col-5">User Name</th>
-            <th className="col-5">Password</th>
-          </tr>
-        </thead>
-        <tbody>
-          {accountList.map((account: Account, index: number) => (
-            <tr key={account._id}>
-              <AccountTableRow
-                account={account}
-                index={index}
-                onRemove={handleRemove}
-                onEdit={handleEdit}
-              />
-            </tr>
-          ))}
-          {isAddNew && (
-            <tr>
-              <AccountTableForm
-                initialValue={accountSelect}
-                onCancel={handleCancel}
-                onConfirm={handleAdd}
-              />
-            </tr>
-          )}
-        </tbody>
-      </Table>
-      {accountList.length <= 0 && (
-        <>
-          {!isAddNew && (
-            <div className="container empty shadow">
-              There is no account added
-            </div>
-          )}
-        </>
-      )}
-      <div className="align-self-end mt-3 ">
-        <ExportToExcel csvData={accountList} fileName={"AccountListFile"} />
-        <Button
-          variant="success"
-          size="sm"
-          onClick={handleAddNew}
-          disabled={isAddNew}
-        >
-          Add New
-        </Button>
+      <Container className="d-flex flex-column  accountTable">
+        <Table headerContent={headerContent}>
+          <>
+            {accountList.map((account: Account, index: number) => (
+              <tr key={account._id}>
+                <TableRow
+                  account={account}
+                  index={index}
+                  onRemove={handleRemove}
+                  onEdit={handleEdit}
+                />
+              </tr>
+            ))}
+            {isAddNew && (
+              <tr>
+                <TableForm
+                  initialValue={accountSelect}
+                  onCancel={handleCancel}
+                  onConfirm={handleAdd}
+                />
+              </tr>
+            )}
+          </>
+        </Table>
+        {accountList.length <= 0 && (
+          <>
+            {!isAddNew && (
+              <div className="container empty shadow">
+                There is no account added
+              </div>
+            )}
+          </>
+        )}
+        <div className="align-self-end mt-3 ">
+          <ExportToExcel csvData={accountList} fileName={"AccountListFile"} />
+          <Button
+            variant="success"
+            size="sm"
+            onClick={handleAddNew}
+            disabled={isAddNew}
+          >
+            Add New
+          </Button>
 
-        <Button
-          className="ms-2"
-          size="sm"
-          disabled={accountList.length <= 0}
-          onClick={handleSubmit}
-        >
-          Submit
-        </Button>
-      </div>
-    </div>
+          <Button
+            className="ms-2"
+            size="sm"
+            disabled={accountList.length <= 0}
+            onClick={handleSubmit}
+          >
+            Submit
+          </Button>
+        </div>
+      </Container>
+    </>
   );
 };
 
