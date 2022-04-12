@@ -1,6 +1,6 @@
-import { buildSchema } from "graphql";
+import { gql } from "apollo-server";
 
-export default buildSchema(`
+const typeDefs = gql`
     type User {
         username: String!
         password: String!
@@ -21,20 +21,22 @@ export default buildSchema(`
         username: String!
     }
 
-    type RootQuery {
+    type Query {
+        hello: String
+        hii: String
         verifyToken(token: String!): User
     }
-    
-    type RootMutation {
+
+    type Mutation {
         login(username: String!, password: String!): LoginUser
         createSellerAccount(userInputs: [UserInput!]!): [User!]!
-        changePassword(username: String!, password: String!, newPassword: String!): Username
+        changePassword(
+            username: String!
+            password: String!
+            newPassword: String!
+        ): Username
         resetPassword(username: String!): Username
     }
-    
-    schema {
-        query: RootQuery
-        mutation: RootMutation
-    }
+`;
 
-`);
+export default typeDefs;
